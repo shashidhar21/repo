@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Roboto+Slab:wght@100..900&display=swap');
+
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing:border-box ;
+    font-family: "Doto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    background: #c31432;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.navbar{
+    background-color: transparent;
+    
+} 
+.nav-link {
+    color: white;
+}
+.product-img{
+    width: 100%;
+    height: 150px;
+    text-align: center;
+}
