@@ -11,6 +11,7 @@ function loadCart(){
         cartItems=JSON.parse(cartvalues)
         // function to update cartui
         updateCartUi()
+        handleCartIconTotal()
     }
 }
 
@@ -33,7 +34,7 @@ function updateCartUi(){
         <span class="quantity">${ele.quantity}</span>
         <button class="btn btn-danger decrement">-</button>
         <!-- delete functionality -->
-    <button class="btn btn-warning">delete</button>
+    <button class="btn btn-warning delete-btn">delete</button>
     </div>
   </div>
 </div>`
@@ -44,9 +45,8 @@ let deleteBtn=cartCard.querySelector(".delete-btn")
 let Qval=cartCard.querySelector(".quantity")
 
 // adding the functionalities
-
-incrementBtn.addEventListener("click",function(){
-handleIncrement(ele,Qval)
+incrementBtn.addEventListener('click',function(){
+    handleIncrement(ele,Qval)
 })
 decrementBtn.addEventListener("click",function(){
     handleDecrement(ele,Qval)
@@ -55,33 +55,60 @@ deleteBtn.addEventListener("click",function(){
     handleDelete(ele)
 })
 
-        // appending the child
-        cartContainer.appendChild(cartCard)
-    })
-
+ // appending the child
+cartContainer.appendChild(cartCard)
+})
+handleCartTotal()
 }
 
 // function to handle increment
 function handleIncrement(ele,Qval){
     ele.quantity++
     Qval.innerText=ele.quantity
+    // updating local storge
+localStorage.setItem("cartitem",JSON.stringify(cartItems))
+handleCartTotal()
 }
 
 // function to handle decrement
-function handleDecrement(){
-
+function handleDecrement(ele,Qval){
+    if(ele.quantity>1){
+     ele.quantity--
+    Qval.innerText=ele.quantity
+    localStorage.setItem("cartitem",JSON.stringify(cartItems))
+    handleCartTotal()
+    }
+    
 }
 
 // function to delete
-function handleDelete(){
-
+function handleDelete(ele){
+    cartItems=cartItems.filter(item=>item.title!==ele.title)
+    localStorage.setItem("cartitem",JSON.stringify(cartItems))
+updateCartUi()
+handleCartTotal()
 }
 
 // function to handle clear all
 function handleClearAll(){
+    cartItems.splice(0)
+    localStorage.clear()
+updateCartUi()
+handleCartTotal()
+
 
 }
 // function to handle total
 function handleCartTotal(){
-
+ let cartTotalVal=document.querySelector(".cart-total")
+    console.log(cartTotalVal)
+    let cartTotal=cartItems.reduce((total,ele)=>total+ele.quantity*ele.price,0)
+    cartTotalVal.textContent=`Total Amount: ${cartTotal}`;
+    
+}
+function handleCartIconTotal(){
+    let cartIconVal=document.querySelector(".cart-icon-value")
+    console.log(cartIconVal)
+    let cartTotal=cartItems.reduce((total,ele)=>total+ele.quantity,0)
+    cartIconVal.textContent=cartTotal;
 }
